@@ -5,7 +5,6 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import router from './src/router/admin.routes.js';
-import userRoutes from './src/router/user.routes.js';
 import connectToMongoDB from './src/db/connectToMongoDB.js';
 
 dotenv.config();
@@ -19,7 +18,6 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use('/api/admin',router);
-app.use('/api/users',userRoutes);
 
 app.listen(PORT, () => {
     connectToMongoDB();
