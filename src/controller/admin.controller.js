@@ -1,7 +1,9 @@
 import bycrypt from 'bcryptjs';
 import Admin from '../models/admin.model.js';
-import Question from '../models/question.model.js';
 import generateTokenSetCookie from "../utils/generateToken.js";
+import {addQuestionPaperService} from '../service/addQuestions.service.js'
+import { saveAnswers } from '../service/addAnswers.service.js';
+import { evaluateAndSaveResults } from '../service/evaluateResults.service.js';
 
 // ------------Admin sign up---------- ✅
 export const signUpAdmin = async (req, res) => {
@@ -54,10 +56,10 @@ export const logInAdmin = async (req, res) => {
             return res.status(400).json({ success: false, error: "Invalid Username or Password" });
         }
 
-        generateTokenSetCookie(user._id,res);
+        generateTokenSetCookie(user._id, res);
 
         console.log("Admin Logged In");
-        res.status(200).json({success:true});
+        res.status(200).json({ success: true });
 
     } catch (error) {
         console.log("Error in Login controller", error.message);
@@ -85,12 +87,40 @@ export const addQuestionPaper = async (req, res) => {
     try {
         const questionsData = req.body.questions;
 
-        await Question.create(questionsData);
+        // Call the service function to add question paper
+        const result = await addQuestionPaperService(questionsData);
 
-        console.log("Saved Question");
-        res.status(201).json({ message: "Question saved successfully" });
+        // Respond with success message
+        res.status(201).json(result);
     } catch (error) {
+        // Respond with error message
         res.status(500).json({ error: error.message });
     }
 }
+
+// --------------------- adding Answers to DB ----------- ✅
+export const Answers = async (req, res) => {
+    try {
+        const { answer } = req.body;
+        const result = await saveAnswers(answer);
+        res.status(200).json(result);
+    } catch (error) {
+        console.error("Error in Answers controller:", error.message);
+        res.status(500).json({ error: "Internal Server error" });
+    }
+};
+
+//------------------------ evaluating the marks --------------------------- ✅
+
+// Function to evaluate scores based on user answers
+
+export const evaluationResults = async (req, res) => {
+    try {
+        const result = await evaluateAndSaveResults();
+        res.json(result);
+    } catch (error) {
+        console.error('Error in evaluationResults controller:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
