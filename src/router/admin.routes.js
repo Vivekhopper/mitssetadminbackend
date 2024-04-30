@@ -11,13 +11,12 @@ router.post('/loginAdmin', logInAdmin);  // ✅
 router.get('/logoutAdmin', logOutAdmin);  // ✅
 
 // Protect the route for adding question paper
-router.post('/addQuestionPaper', adminProtectingRouter, addQuestionPaper);  // ✅
+router.post('/addQuestionPaper', adminProtectingRouter,addQuestionPaper);  // ✅
 
 // adding the answers for evaluation
-router.post('/Answers', adminProtectingRouter, Answers); //  ✅
+router.post('/Answers',adminProtectingRouter, Answers); //  ✅
 
 // evaluating and getting results 
-router.get('/evaluationResults', adminProtectingRouter, evaluationResults); // ✅ 
-
+router.get('/evaluationResults',adminProtectingRouter, evaluationResults); // ✅ 
 
 export default router;

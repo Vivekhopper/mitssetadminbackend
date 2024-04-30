@@ -2,6 +2,7 @@ import Subject from '../models/finalAnswer.model.js';
 import Question from '../models/question.model.js';
 
 export const saveAnswers = async (answerData) => {
+    console.log(answerData);
     let physicsData, chemistryData, mathematicsData;
     let physicsDataDB, chemistryDataDB, mathematicsDataDB;
 

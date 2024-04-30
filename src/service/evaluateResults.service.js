@@ -1,6 +1,7 @@
 import Subject from '../models/finalAnswer.model.js';
 import UserAnswer from '../models/userAnswer.model.js';
 import Evaluation from '../models/saveScore.model.js';
+import UserReg from '../models/userSignup.model.js';
 
 export const evaluateAndSaveResults = async () => {
     try {
@@ -15,7 +16,10 @@ export const evaluateAndSaveResults = async () => {
             await saveEvaluation(evaluationData);
         }
 
-        return { success: true };
+        const finalResults = await Evaluation.find({}); 
+        
+        return { success: true , finalResults: finalResults};
+
     } catch (error) {
         console.error('Error in evaluationResults service:', error);
         throw new Error('Internal Server Error');
@@ -53,9 +57,14 @@ const evaluateScores = async (user) => {
     const chemistryScore = getScore(chemistryData, FchemistryData);
     const mathsScore = getScore(mathematicsData, FmathematicData);
 
+
+    const userDetails = await UserReg.findOne({hallTicketNo: user.hallTicketNo});
+
     return {
         hallTicketNo: user.hallTicketNo,
+        name:userDetails.name,
         dateOfBirth: user.dateOfBirth,
+        gender:userDetails.gender,
         scores: {
             mathematics: mathsScore,
             physics: physicsScore,

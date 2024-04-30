@@ -2,12 +2,20 @@ import mongoose from 'mongoose';
 
 const EvaluationSchema = new mongoose.Schema({
     hallTicketNo: {
-        type: Number,
+        type: String,
         required: true,
         unique: true,
     },
+    name:{
+        type: String,
+        required: true,
+    },
     dateOfBirth: {
         type: Date,
+        required: true,
+    },
+    gender:{
+        type: String,
         required: true,
     },
     scores: {

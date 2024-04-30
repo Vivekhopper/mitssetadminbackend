@@ -14,7 +14,7 @@ const SubjectSchema = new mongoose.Schema({
 
 // Define schema for storing hall ticket information
 const userAnswerSchema = new mongoose.Schema({
-    hallTicketNo: Number,
+    hallTicketNo: String,
     dateOfBirth: Date,
     questions: [SubjectSchema]
 });
