@@ -12,7 +12,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(cors());
+app.use(cors({
+    origin: ['https://mitset.netlify.app', 'http://localhost:8000', 'http://localhost:5173','http://localhost:5174'], // Specify the allowed origins
+    credentials: true, // Enable sending cookies
+}));
 app.use(express.json()); 
 app.use(cookieParser());
 app.use(bodyParser.json());

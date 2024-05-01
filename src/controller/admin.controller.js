@@ -4,6 +4,7 @@ import generateTokenSetCookie from "../utils/generateToken.js";
 import {addQuestionPaperService} from '../service/addQuestions.service.js'
 import { saveAnswers } from '../service/addAnswers.service.js';
 import { evaluateAndSaveResults } from '../service/evaluateResults.service.js';
+import StartTime from '../models/startTime.model.js';
 
 // ------------Admin sign up---------- ✅
 export const signUpAdmin = async (req, res) => {
@@ -85,13 +86,27 @@ export const logOutAdmin = (req, res) => {
 export const addQuestionPaper = async (req, res) => {
 
     try {
+
+        const startTime = req.body.startTime
+        
+        const existingStartTime = await StartTime.findOne();
+
+        if (existingStartTime) {
+            // Clear the database
+            await StartTime.deleteMany();
+        }
+
+
+        const setTime = await StartTime.create({startTime:startTime});
+        
+
         const questionsData = req.body.questions;
 
         // Call the service function to add question paper
         const result = await addQuestionPaperService(questionsData);
 
         // Respond with success message
-        res.status(201).json(result);
+        res.status(201).json({setTime:setTime,results:result});
     } catch (error) {
         // Respond with error message
         res.status(500).json({ error: error.message });

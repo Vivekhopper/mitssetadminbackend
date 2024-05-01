@@ -17,6 +17,7 @@ export const evaluateAndSaveResults = async () => {
         }
 
         const finalResults = await Evaluation.find({}); 
+        console.log(finalResults)
         
         return { success: true , finalResults: finalResults};
 
@@ -57,8 +58,11 @@ const evaluateScores = async (user) => {
     const chemistryScore = getScore(chemistryData, FchemistryData);
     const mathsScore = getScore(mathematicsData, FmathematicData);
 
+    // console.log(user.hallTicketNo);
+
 
     const userDetails = await UserReg.findOne({hallTicketNo: user.hallTicketNo});
+    // console.log(userDetails)
 
     return {
         hallTicketNo: user.hallTicketNo,
