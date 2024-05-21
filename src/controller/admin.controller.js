@@ -58,14 +58,13 @@ export const logInAdmin = async (req, res) => {
         }
 
         generateTokenSetCookie(user._id, res);
-
-        console.log("Admin Logged In");
-        res.status(200).json({ success: true });
+        
+        console.log("Admin Logged In",user);
+        res.status(200).json({ success: true , userName: user.userName});
 
     } catch (error) {
         console.log("Error in Login controller", error.message);
         res.status(500).json({ success: false, error: 'Internal Server Error' });
-
     }
 }
 
@@ -138,5 +137,22 @@ export const evaluationResults = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+export const check = async (req, res) => {
+    try {
+
+        const user = req.user
+        const curr = req.body.currentPage
+
+        res.status(200).json({ success: true , userName: user.userName, currentPage:curr});
+
+
+    } catch (error) {
+        console.error('Error in evaluationResults controller:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 
 

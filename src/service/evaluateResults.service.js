@@ -12,12 +12,14 @@ export const evaluateAndSaveResults = async () => {
         for (const user of users) {
             const evaluationData = await evaluateScores(user);
 
+            // console.log(evaluationData);
+
             // Save the evaluation results to the database
             await saveEvaluation(evaluationData);
         }
 
         const finalResults = await Evaluation.find({}); 
-        console.log(finalResults)
+        // console.log(finalResults)
         
         return { success: true , finalResults: finalResults};
 
@@ -58,11 +60,11 @@ const evaluateScores = async (user) => {
     const chemistryScore = getScore(chemistryData, FchemistryData);
     const mathsScore = getScore(mathematicsData, FmathematicData);
 
-    // console.log(user.hallTicketNo);
+    console.log(user.hallTicketNo);
 
 
     const userDetails = await UserReg.findOne({hallTicketNo: user.hallTicketNo});
-    // console.log(userDetails)
+    console.log(userDetails)
 
     return {
         hallTicketNo: user.hallTicketNo,
