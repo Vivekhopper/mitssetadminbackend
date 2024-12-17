@@ -1,6 +1,6 @@
 import express from 'express';
 import { logInAdmin,check, logOutAdmin, signUpAdmin, addQuestionPaper,Answers,evaluationResults } from '../controller/admin.controller.js';
-import adminProtectingRouter from '../middleware/adminProtectingRouter.js'
+import adminProtectingRouter from '../middleware/adminProtectingRouter.js';
 
 const router = express.Router();
 
@@ -19,6 +19,6 @@ router.post('/Answers',adminProtectingRouter, Answers); //  ✅
 // evaluating and getting results 
 router.get('/evaluationResults',adminProtectingRouter, evaluationResults); // ✅ 
 
-router.post('/check',adminProtectingRouter, check); //
+router.post('/check',adminProtectingRouter, check); // ✅
 
 export default router;
